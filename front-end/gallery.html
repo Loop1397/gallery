@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css"/>
+    <script>
+        processAllImages = () => {
+            const images = document.getElementsByClassName('picture');
+          
+            Array.from(images).forEach(img => {
+                const width = img.width;
+                const height = img.height;
+
+                if (height > width && height/width >= 6/5 ) {
+                    img.style.width = "100%";
+                    img.style.height = "auto";
+                } else {
+                    img.style.width = "auto";
+                    img.style.height = "100%";
+                }
+            })
+        }
+
+        window.onload = () => {
+            processAllImages();
+        }
+      </script>
+</head>
+<body>
+    <div class="appContent">
+        <div class="container">
+            <figure>
+                <img src="./image/honeydragon1.png" class="picture"/>
+            </figure>
+            <figure>
+                <img src="./image/honeydragon2.png" class="picture"/>
+            </figure>
+            <figure>
+                <img src="./image/honeydragon3.png" class="picture"/>
+            </figure>
+            <figure>
+                <img src="./image/tamaci1.png" class="picture"/>
+            </figure>
+            <figure>
+                <img src="./image/tamaci2.jpg" class="picture"/>
+            </figure>
+            <figure>
+                <img src="./image/tamaci3.png" class="picture"/>
+            </figure>
+            <figure>
+                <img src="./image/hotki1.png" class="picture"/>
+            </figure>
+            <figure>
+                <img src="./image/hotki2.png" class="picture"/>
+            </figure>
+            <figure>
+                <img src="./image/hotki3.png" class="picture"/>
+            </figure>
+        </div>
+
+    </div>
+</body>
+</html>
