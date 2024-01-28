@@ -5,29 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./css/index.css"/>
-    <script>
-        const postData = async () => {
-            <!-- event.preventDefault(); -->
-            const formData = new FormData(document.getElementById('login-form'));
-            
-            console.log(formData.values);
-
-            const searchParams = new URLSearchParams(formData);
-
-            console.log(searchParams.toString());
-
-            try {
-                const response = await fetch('http://localhost:3000', {
-                    method: 'POST',
-                    body: searchParams,
-                });
-                const data = await response.json();
-                console.log(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        }
-    </script>
+    
 </head>
 <body>
     <div class="login-container">
@@ -38,5 +16,29 @@
             <input type="submit" value="Login" onclick="postData()">
         </form>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const postData = async () => {
+            event.preventDefault();
+            const loginData = document.getElementById('login-form');
+
+            const userData = {
+                "userId" : loginData[0].value,
+                "password" : loginData[1].value
+            } 
+
+            //console.log(JSON.stringify(userData));
+            //console.log(userData);
+
+            try {
+                const responseData = await axios.post('http://localhost:3000', userData);
+
+                console.log(responseData.data.message);
+            } catch (error) {
+
+                console.error('Error fetching data:', error);
+            }
+        }
+    </script>
 </body>
 </html>
