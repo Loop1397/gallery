@@ -10,32 +10,27 @@
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form id="login-form">
+        <div id="login-form">
             <input type="text" name="userId" placeholder="Id" required>
             <input type="password" name="password" placeholder="Password" required>
             <input type="submit" value="Login" onclick="postData()">
-        </form>
+        </input>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         const postData = async () => {
-            event.preventDefault();
-            const loginData = document.getElementById('login-form');
+            const inputs = document.querySelectorAll("#login-form input");
 
             const userData = {
-                "userId" : loginData[0].value,
-                "password" : loginData[1].value
-            } 
-
-            //console.log(JSON.stringify(userData));
-            //console.log(userData);
+                "userId" : inputs[0].value,
+                "password" : inputs[1].value 
+            }
 
             try {
                 const responseData = await axios.post('http://localhost:3000', userData);
 
                 console.log(responseData.data.message);
             } catch (error) {
-
                 console.error('Error fetching data:', error);
             }
         }

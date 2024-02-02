@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { AppService } from './app.service';
 import { todo } from 'node:test';
 
@@ -13,9 +13,9 @@ export class AppController {
   }
 
   @Post()
-  async function(@Body() body: any) {
+  login(@Body() body: any) {
     console.log('Received POST request with body:', body);
-    // 여기에서 body를 가지고 필요한 작업을 수행
-    return { message: 'POST request handled successfully' };
+
+    return this.appService.login(body);
   }
 }
