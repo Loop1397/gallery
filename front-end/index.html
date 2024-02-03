@@ -27,7 +27,7 @@
             }
 
             try {
-                const responseData = await axios.post('http://localhost:3000', userData);
+                const responseData = await axios.post('http://localhost:3000/auth/signup', userData);
 
                 console.log(responseData.data.message);
             } catch (error) {

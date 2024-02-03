@@ -11,11 +11,4 @@ export class AppController {
     console.log('HELLO!');
     return this.appService.getHello();
   }
-
-  @Post()
-  login(@Body() body: any) {
-    console.log('Received POST request with body:', body);
-
-    return this.appService.login(body);
-  }
 }
