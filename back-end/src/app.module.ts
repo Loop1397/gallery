@@ -8,7 +8,7 @@ import { typeORMConfig } from './configs/typeorm.config';
 
 @Module({
   imports: [TypeOrmModule.forRoot(typeORMConfig),
-    AuthModule, BoardModule,
+    AuthModule, BoardModule, AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
