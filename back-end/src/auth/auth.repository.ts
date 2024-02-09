@@ -1,6 +1,8 @@
 import { DataSource, Repository } from "typeorm";
 import { Auth } from "./auth.entity";
-import { Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, InternalServerErrorException } from "@nestjs/common";
+import { CreateAuthDto } from "./dto/create-auto.dto";
+import { create } from "domain";
 
 @Injectable()
 export class AuthRepository extends Repository<Auth> {
@@ -8,20 +10,17 @@ export class AuthRepository extends Repository<Auth> {
         super(Auth, dataSource.createEntityManager());
     }
 
-    async createUser(body) {
-        const { userId, password } = body;
+    async createUser(createAuthDto: CreateAuthDto): Promise <void> {
+        const { userId, password } = createAuthDto;
 
-        const found = await this.findOneBy({userId: userId});
+        const user = new Auth();
+        user.userId = userId;
+        user.password = password;
         
-        if (!found) {
-            const user = new Auth();
-            user.userId = userId;
-            user.password = password;
+        if(!await this.findOneBy({userId: userId})) {
             await user.save();
-
-            return { message : "user created!!" };
         } else {
-            return { message : "Existing user id" };
+            throw new ConflictException('Existing userId');
         }
     }
 
