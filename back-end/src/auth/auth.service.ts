@@ -15,6 +15,10 @@ export class AuthService {
         return this.authRepository.createUser(createAuthDto);
     }
 
+    async deleteUserById(userId: string): Promise <void> {
+        return this.authRepository.deleteUserById(userId);
+    }
+
     login(body): object{
         return this.authRepository.login(body);
     }

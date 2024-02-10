@@ -1,6 +1,6 @@
 import { DataSource, Repository } from "typeorm";
-import { Auth } from "./auth.entity";
-import { ConflictException, Injectable, InternalServerErrorException } from "@nestjs/common";
+import { Auth } from "./auth.entity"
+import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import { CreateAuthDto } from "./dto/create-auto.dto";
 import { create } from "domain";
 
@@ -21,6 +21,23 @@ export class AuthRepository extends Repository<Auth> {
             await user.save();
         } else {
             throw new ConflictException('Existing userId');
+        }
+    }
+
+    async deleteUserById(userId: string): Promise <void> {
+        try {
+            const result = await this
+            .createQueryBuilder()
+            .delete()
+            .where("userId = :userId", {userId: userId})
+            .execute()
+
+            // 존재하지 않는 id를 지우지 않으려고 할 때
+            if(!result.affected) {
+                throw new NotFoundException('존재하지 않는 id');
+            }
+        } catch(error) {
+            throw error;
         }
     }
 
