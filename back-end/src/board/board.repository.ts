@@ -32,4 +32,17 @@ export class BoardRepository extends Repository<Board> {
 
         return board;
     }
+
+    async deleteBoardById(id: number): Promise <void> {
+        const result = await this
+        .createQueryBuilder()
+        .delete()
+        .where("id = :id", {id: id})
+        .execute()
+
+        // 존재하지 않는 id를 지우지 않으려고 할 때
+        if(!result.affected) {
+            throw new NotFoundException('존재하지 않는 id');
+        }
+    }
 }

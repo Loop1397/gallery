@@ -21,4 +21,8 @@ export class BoardService {
     createBoard(body: any): Promise <Board> {
         return this.boardRepository.createBoard(body);
     }
+
+    deleteBoardById(id: number): Promise <void> {
+        return this.boardRepository.deleteBoardById(id);
+    }
 }

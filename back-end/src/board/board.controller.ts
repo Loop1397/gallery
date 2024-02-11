@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UploadedFile } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { Board } from './board.entity';
 
@@ -12,7 +12,12 @@ export class BoardController {
     }
 
     @Post()
-    createBoard(@Body() body: any): Promise <Board> {
-        return this.boardService.createBoard(body);
+    uploadFile(@UploadedFile() file: Express.Multer.File) {
+        console.log(file);
+    }
+
+    @Delete('/:id')
+    deleteBoardById(@Param('id') id: number): Promise <void> {
+        return this.boardService.deleteBoardById(id);
     }
 }
