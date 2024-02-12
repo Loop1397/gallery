@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, UploadedFile } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { Board } from './board.entity';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('board')
 export class BoardController {
@@ -12,8 +13,8 @@ export class BoardController {
     }
 
     @Post()
-    uploadFile(@UploadedFile() file: Express.Multer.File) {
-        console.log(file);
+    createBoard(@Body() body: any) {
+        return this.boardService.createBoard(body);
     }
 
     @Delete('/:id')
