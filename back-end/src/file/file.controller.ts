@@ -8,7 +8,6 @@ export class FileController {
     @Post('upload')
     uploadImage(@UploadedFile() file: Express.Multer.File) {
         console.log(file);
-        
     }
 
 }
