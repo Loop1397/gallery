@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { DataSource, Repository } from "typeorm";
 import { Board } from "./board.entity";
 import { BoardStatus } from "./board.model";
@@ -31,6 +31,22 @@ export class BoardRepository extends Repository<Board> {
         await board.save();
 
         return board;
+    }
+
+    async updateBoard(id, body) {
+        const { title, content, author } = body;
+
+        const found = await this.getBoardById(id);
+
+        //게시글의 원 작성자와 요청을 보낸 작성자가 다를 경우 에러
+        if(author !== found.author) {
+            throw new UnauthorizedException('author가 다릅니다');
+        }
+        
+        found.title = title;
+        found.content = content;
+        found.author = author;
+        await found.save();
     }
 
     async deleteBoardById(id: number): Promise <void> {
