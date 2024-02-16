@@ -4,10 +4,10 @@ import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, U
 @Entity()
 export class Auth extends BaseEntity {
     @PrimaryGeneratedColumn()
-    userNumber: number;
+    user_number: number;
 
     @Column()
-    userId: string;
+    user_id: string;
 
     @Column()
     password: string;

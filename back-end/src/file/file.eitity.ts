@@ -1,14 +1,19 @@
-/* import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-//@Unique 데코레이터 : 필드 중 임의로 유니크한 값 지정 가능
 @Entity()
-export class Auth extends BaseEntity {
+export class File extends BaseEntity {
     @PrimaryGeneratedColumn()
-    userNumber: number;
+    file_number: number;
 
     @Column()
-    userId: string;
+    file_name: string;
 
     @Column()
-    password: string;
-} */
+    file_path: string;
+    
+    @Column()
+    mime_type: string;
+
+    @CreateDateColumn()
+    created_at: Date;
+} 

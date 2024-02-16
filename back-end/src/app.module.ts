@@ -9,7 +9,7 @@ import { FileModule } from './file/file.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot(typeORMConfig),
-    AuthModule, BoardModule, AuthModule, FileModule
+    AuthModule, BoardModule, FileModule
   ],
   controllers: [AppController],
   providers: [AppService],

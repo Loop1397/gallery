@@ -14,10 +14,10 @@ export class AuthRepository extends Repository<Auth> {
         const { userId, password } = createAuthDto;
 
         const user = new Auth();
-        user.userId = userId;
+        user.user_id = userId;
         user.password = password;
         
-        if(!await this.findOneBy({userId: userId})) {
+        if(!await this.findOneBy({user_id: userId})) {
             await user.save();
         } else {
             throw new ConflictException('Existing userId');
@@ -27,7 +27,7 @@ export class AuthRepository extends Repository<Auth> {
     async login(body) {
         const { userId, password } = body;
 
-        const found = await this.findOneBy({userId: userId})
+        const found = await this.findOneBy({user_id: userId})
     
         if (found && found.password === password) {
           return found;

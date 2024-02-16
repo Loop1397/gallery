@@ -1,49 +1,26 @@
-/* import { DataSource, Repository } from "typeorm";
+import { DataSource, Repository } from "typeorm";
 import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
+import { File } from "./file.eitity";
 
+//TODO: ERROR [ExceptionsHandler] DataSource is not set for this entity. 에러 해결
 @Injectable()
-export class AuthRepository extends Repository<Auth> {
+export class FileRepository extends Repository<File> {
     constructor(dataSource: DataSource) {
-        super(Auth, dataSource.createEntityManager());
+        super(File, dataSource.createEntityManager());
     }
 
-    async createUser(createAuthDto: CreateAuthDto): Promise <void> {
-        const { userId, password } = createAuthDto;
+    async uploadImage(file) {
+        console.log(file)
 
-        const user = new Auth();
-        user.userId = userId;
-        user.password = password;
-        
-        if(!await this.findOneBy({userId: userId})) {
-            await user.save();
-        } else {
-            throw new ConflictException('Existing userId');
-        }
+        const file_name = file.originalname;
+        const file_path = file.path;
+        const mime_type = file.mimetype;
+
+        const newFile = new File();
+        newFile.file_name = file_name;
+        newFile.file_path = file_path;
+        newFile.mime_type = mime_type;
+
+        await newFile.save()
     }
-
-    async login(body) {
-        const { userId, password } = body;
-
-        const found = await this.findOneBy({userId: userId})
-    
-        if (found && found.password === password) {
-          return found;
-        } else {
-          return { message : "Login failed!!" };
-        }   
-    }
-
-
-    async deleteUserById(userId: string): Promise <void> {
-        const result = await this
-        .createQueryBuilder()
-        .delete()
-        .where("userId = :userId", {userId: userId})
-        .execute()
-
-        // 존재하지 않는 id를 지우지 않으려고 할 때
-        if(!result.affected) {
-            throw new NotFoundException('존재하지 않는 id');
-        }
-    }
-} */
+}
