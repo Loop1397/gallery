@@ -1,6 +1,6 @@
 import { DataSource, Repository } from "typeorm";
 import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
-import { File } from "./file.eitity";
+import { File } from "./file.entity";
 
 //TODO: ERROR [ExceptionsHandler] DataSource is not set for this entity. 에러 해결
 @Injectable()
