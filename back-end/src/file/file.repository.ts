@@ -23,4 +23,14 @@ export class FileRepository extends Repository<File> {
 
         await newFile.save()
     }
+
+    async getImageById(id: number) {
+        const found = await this.findOneBy({file_number: id});
+
+        if(!found) {
+            throw new NotFoundException(`Can't find Image with id ${id}`);
+        }
+
+        return found;
+    }
 }

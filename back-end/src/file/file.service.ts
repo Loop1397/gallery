@@ -12,4 +12,8 @@ export class FileService {
     uploadImage(file) {
         return this.fileRepository.uploadImage(file);
     }
+
+    getImageById(id: number) {
+        return this.fileRepository.getImageById(id);
+    }
 }
