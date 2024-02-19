@@ -33,4 +33,17 @@ export class FileRepository extends Repository<File> {
 
         return found;
     }
+    
+    async deleteImageById(id: number) {
+        const result = await this
+        .createQueryBuilder()
+        .delete()
+        .where("file_number = :id", {id: id})
+        .execute()
+
+        // 존재하지 않는 id를 지우지 않으려고 할 때
+        if(!result.affected) {
+            throw new NotFoundException('존재하지 않는 이미지의 id');
+        }
+    }
 }

@@ -16,4 +16,8 @@ export class FileService {
     getImageById(id: number) {
         return this.fileRepository.getImageById(id);
     }
+
+    deleteImageById(id: number) {
+        return this.fileRepository.deleteImageById(id);
+    }
 }
