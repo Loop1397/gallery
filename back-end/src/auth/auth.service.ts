@@ -19,6 +19,10 @@ export class AuthService {
         return this.authRepository.deleteUserById(userId);
     }
 
+    getUserInfoById(userId: string) {
+        return this.authRepository.getUserInfoById(userId);
+    }
+
     login(body): object{
         return this.authRepository.login(body);
     }

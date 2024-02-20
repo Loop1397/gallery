@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { Auth } from './auth.entity';
@@ -17,6 +17,11 @@ export class AuthController {
         console.log('Received POST request with body:', body);
         
         return this.authService.login(body);
+    }
+
+    @Get(':/userId')
+    getUserInfoById(@Param('userId') userId: string) {
+        return this.authService.getUserInfoById(userId);
     }
 
     @Delete('/:userId')
