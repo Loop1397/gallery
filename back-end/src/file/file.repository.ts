@@ -24,7 +24,7 @@ export class FileRepository extends Repository<File> {
         await newFile.save()
     }
 
-    async getImageById(id: number) {
+    async getImageData(id: number) {
         const found = await this.findOneBy({file_number: id});
 
         if(!found) {

@@ -13,8 +13,8 @@ export class FileService {
         return this.fileRepository.uploadImage(file);
     }
 
-    getImageById(id: number) {
-        return this.fileRepository.getImageById(id);
+    getImageData(id: number) {
+        return this.fileRepository.getImageData(id);
     }
 
     deleteImageById(id: number) {
