@@ -20,6 +20,7 @@ export class FileController {
         return this.fileService.getImageData(id);
     }
 
+    // TODO: 이미지 제대로 나오게 변경
     @Get('/image/:imageName')
     getImage(@Res() res: Response, imageName: string) {
         // 이미지 파일의 경로 설정
