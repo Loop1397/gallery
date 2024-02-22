@@ -10,7 +10,10 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeORMConfig),
+  imports: [
+    // TypeORM 설정
+    TypeOrmModule.forRoot(typeORMConfig),
+    // 정적 파일 제공을 위한 public 폴더 설정
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../files'),
     }),
