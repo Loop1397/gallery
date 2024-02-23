@@ -15,16 +15,16 @@ header {
     width: 100%;
 }
 
-.container {
+.imageContainer {
     display: flex;
     flex-wrap: wrap;
-    /* gap: 30px; */
+    gap: 25px;
     width: 800px;
     height:auto;
-    justify-content:space-between;
+    /* justify-content:space-between; */
 }
 
-.container > figure {
+.imageContainer > figure {
     display: flex;
     width: 250px;
     height: 300px;
