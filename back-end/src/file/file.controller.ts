@@ -5,6 +5,10 @@ import { Response } from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
 
+/**
+ *  TODO
+ *  [ ] : 원본 그림파일 업로드 기능 만들기
+ * */ 
 @Controller('file')
 export class FileController {
     constructor(private fileService: FileService) {}

@@ -2,7 +2,10 @@ import { DataSource, Repository } from "typeorm";
 import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import { File } from "./file.entity";
 
-//TODO: ERROR [ExceptionsHandler] DataSource is not set for this entity. 에러 해결
+/** 
+ * TODO: ERROR [ExceptionsHandler] DataSource is not set for this entity. 에러 해결
+ * [x] 파일 이름이 entity가 아닌 entiti로 되어있어서 생긴 오류. 
+ * */
 @Injectable()
 export class FileRepository extends Repository<File> {
     constructor(dataSource: DataSource) {

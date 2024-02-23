@@ -12,7 +12,7 @@ import { FileRepository } from './file.repository';
   controllers: [FileController],
   imports: [
     MulterModule.register({
-      dest: './upload',
+      dest: './files/images',
     }),
   ]
 })
