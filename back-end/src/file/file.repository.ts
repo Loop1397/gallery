@@ -27,6 +27,20 @@ export class FileRepository extends Repository<File> {
         await newFile.save()
     }
 
+    async getAllImageName() {
+        const images: Array<any> = await this
+            .createQueryBuilder()
+            .select('*')
+            .execute();
+
+        const result = [];
+        images.forEach((image) => {
+            result.push(image.file_name);
+        })
+
+        return result;
+    }
+
     async getImageData(id: number) {
         const found = await this.findOneBy({file_number: id});
 
@@ -42,7 +56,7 @@ export class FileRepository extends Repository<File> {
         .createQueryBuilder()
         .delete()
         .where("file_number = :id", {id: id})
-        .execute()
+        .execute();
 
         // 존재하지 않는 id를 지우지 않으려고 할 때
         if(!result.affected) {

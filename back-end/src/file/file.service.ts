@@ -13,6 +13,10 @@ export class FileService {
         return this.fileRepository.uploadImage(file);
     }
 
+    getAllImageName() {
+        return this.fileRepository.getAllImageName();
+    }
+
     getImageData(id: number) {
         return this.fileRepository.getImageData(id);
     }

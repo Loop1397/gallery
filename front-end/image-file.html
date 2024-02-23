@@ -9,19 +9,26 @@
     <!-- 이미지를 표시할 영역 -->
     <div id="imageContainer"></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         // 이미지를 가져와 화면에 출력하는 함수
         async function displayImage() {
-            const imageUrl = 'http://localhost:3000/images/HI.png'; // 이미지 파일의 경로
             const imageContainer = document.getElementById('imageContainer');
-
             // 이미지 요소 생성
-            const imgElement = document.createElement('img');
-            imgElement.src = imageUrl; // 이미지의 URL 설정
-            imgElement.alt = 'HI Image'; // 이미지의 대체 텍스트 설정
 
-            // 이미지를 화면에 추가
-            imageContainer.appendChild(imgElement);
+            const imageNames = await axios.get('http://localhost:3000/file');
+            imageNames.data.forEach((name) => {
+                const imgElement = document.createElement('img');
+                console.log(name);
+                const imageUrl = `http://localhost:3000/file/image/${name}`; // 이미지 파일의 경로
+                
+    
+                imgElement.src = imageUrl; // 이미지의 URL 설정
+                imgElement.alt = 'HI Image'; // 이미지의 대체 텍스트 설정
+    
+                // 이미지를 화면에 추가
+                imageContainer.appendChild(imgElement);
+            })
         }
 
         // 페이지 로드 시 이미지 출력 함수 호출
