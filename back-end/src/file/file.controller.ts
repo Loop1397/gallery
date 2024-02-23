@@ -3,20 +3,32 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
 import { Response } from 'express';
 import * as fs from 'fs';
+import { diskStorage } from 'multer';
 import * as path from 'path';
 
 /**
  *  TODO
- *  [ ] : 원본 그림파일 업로드 기능 만들기
- * */ 
+ *  [x] : 원본 그림파일 업로드 기능 만들기
+ *  [ ] : 업로드 
+  * */ 
 @Controller('file')
 export class FileController {
     constructor(private fileService: FileService) {}
 
     @Post('/upload')
-    @UseInterceptors(FileInterceptor('image'))
+    @UseInterceptors(FileInterceptor('image', {
+        storage: diskStorage({
+            destination: './files/images',
+            filename(req, file, callback) {
+                // path.extname : 파일 확장자 가져오기
+                const extension = path.extname(file.originalname);
+                callback(null, `${file.originalname}${extension}`)
+            },
+        })
+    }))
     uploadImage(@UploadedFile() file: Express.Multer.File) {
-        return this.fileService.uploadImage(file);
+        console.log(file);
+        // return this.fileService.uploadImage(file);
     }
 
     @Get('/:id')
@@ -24,7 +36,9 @@ export class FileController {
         return this.fileService.getImageData(id);
     }
 
-    // TODO: 이미지 제대로 나오게 변경
+    /** 
+     * TODO: 이미지 제대로 나오게 변경
+     * */ 
     @Get('/image/:imageName')
     getImage(@Res() res: Response, imageName: string) {
         // 이미지 파일의 경로 설정
