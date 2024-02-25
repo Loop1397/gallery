@@ -13,10 +13,8 @@ export class AuthController {
     }
 
     @Post('/login')
-    login(@Body() body: any) {
-        console.log('Received POST request with body:', body);
-        
-        return this.authService.login(body);
+    login(@Body() createAuthDto: CreateAuthDto) {
+        return this.authService.login(createAuthDto);
     }
 
     @Get(':/userId')

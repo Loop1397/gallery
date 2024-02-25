@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { AuthRepository } from './auth.repository';
 import { Auth } from './auth.entity';
 import { CreateAuthDto } from './dto/create-auth.dto';
+import { create } from 'node:domain';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +24,14 @@ export class AuthService {
         return this.authRepository.getUserInfoById(userId);
     }
 
-    login(body): object{
-        return this.authRepository.login(body);
+    async login(createAuthDto: CreateAuthDto): Promise<object>{
+        const { userId, password } = createAuthDto;
+        const found = await this.authRepository.login(userId);
+
+        if (found && found.password === password) {
+            return found;
+        } else {
+            return { message : "Login failed!!" };
+        }   
     }
 }

@@ -24,16 +24,10 @@ export class AuthRepository extends Repository<Auth> {
         }
     }
 
-    async login(body) {
-        const { userId, password } = body;
-
+    async login(userId: string): Promise<Auth> {
         const found = await this.findOneBy({user_id: userId})
     
-        if (found && found.password === password) {
-          return found;
-        } else {
-          return { message : "Login failed!!" };
-        }   
+        return found;
     }
 
     async getUserInfoById(userId: string) {
