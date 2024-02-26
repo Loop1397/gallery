@@ -62,5 +62,7 @@ export class FileRepository extends Repository<File> {
         if(!result.affected) {
             throw new NotFoundException('존재하지 않는 이미지의 id');
         }
+
+        return { message : "file delete success!!" };
     }
 }

@@ -8,8 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         //이미지 크기 수정 함수
-        const processAllImages = () => {
-            // const images = document.getElementsByClassName('picture'); 
+        const processAllImages = () => { 
             const images = document.querySelectorAll('.appContent .imageContainer figure img');
           
             Array.from(images).forEach(img => {
@@ -23,6 +22,7 @@
                     img.style.width = "auto";
                     img.style.height = "100%";
                 }
+                console.log('크기 변환 완료!');
             })
         }
 
@@ -46,6 +46,8 @@
                 figureElement.appendChild(imgElement)
                 imageContainer.appendChild(figureElement);
             })
+            
+            processAllImages();
         }
 
         //파일 업로드하는 함수
@@ -72,12 +74,10 @@
             imageContainer.innerHTML = '';
 
             displayImage();
-            processAllImages();
         }
 
         window.onload = () => {
             displayImage();
-            processAllImages();
         }
       </script>
 </head>
@@ -92,33 +92,6 @@
 
     <div class="appContent">
         <div class="imageContainer">
-            <!-- <figure>
-                <img src="./image/honeydragon1.png" class="picture"/>
-            </figure>
-            <figure>
-                <img src="./image/honeydragon2.png" class="picture"/>
-            </figure>
-            <figure>
-                <img src="./image/honeydragon3.png" class="picture"/>
-            </figure>
-            <figure>
-                <img src="./image/tamaci1.png" class="picture"/>
-            </figure>
-            <figure>
-                <img src="./image/tamaci2.jpg" class="picture"/>
-            </figure>
-            <figure>
-                <img src="./image/tamaci3.png" class="picture"/>
-            </figure>
-            <figure>
-                <img src="./image/hotki1.png" class="picture"/>
-            </figure>
-            <figure>
-                <img src="./image/hotki2.png" class="picture"/>
-            </figure>
-            <figure>
-                <img src="./image/hotki3.png" class="picture"/>
-            </figure> -->
         </div>
 
     </div>
