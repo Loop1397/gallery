@@ -18,7 +18,7 @@ export class FileController {
     @Post('/upload')
     @UseInterceptors(FileInterceptor('image', {
         storage: diskStorage({
-            destination: './files/images',
+            destination: './file/image',
             filename(req, file, callback) {
                 // path.extname : 파일 확장자 가져오기
                 //const extension = path.extname(file.originalname);
@@ -26,15 +26,13 @@ export class FileController {
             },
         })
     }))
-
     uploadImage(@UploadedFile() file: Express.Multer.File) {
-        console.log(file);
         return this.fileService.uploadImage(file);
     }
 
     @Get()
-    getAllImageName() {
-        return this.fileService.getAllImageName();
+    getAllImagePath() {
+        return this.fileService.getAllImagePath();
     }
 
     @Get('/:id')
@@ -47,8 +45,8 @@ export class FileController {
      * [x] : 해결
      * */ 
     @Get('/image/:imageName')
-    getImage(@Param('imageName') imageName: string, @Res() res: Response) {
-        const imagePath = path.join(__dirname, '..', '..', 'files', 'images', imageName);
+    getImageByName(@Param('imageName') imageName: string, @Res() res: Response) {
+        const imagePath = path.join(__dirname, '..', '..', 'file', 'image', imageName);
 
         try {
             // 요청된 이미지 파일이 서버에 존재하는지 확인

@@ -27,7 +27,7 @@ export class FileRepository extends Repository<File> {
         await newFile.save()
     }
 
-    async getAllImageName() {
+    async getAllImagePath() {
         const images: Array<any> = await this
             .createQueryBuilder()
             .select('*')
@@ -35,7 +35,7 @@ export class FileRepository extends Repository<File> {
 
         const result = [];
         images.forEach((image) => {
-            result.push(image.file_name);
+            result.push(image.file_path);
         })
 
         return result;
