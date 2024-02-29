@@ -24,22 +24,6 @@ export class AuthRepository extends Repository<Auth> {
         }
     }
 
-    async login(userId: string): Promise<Auth> {
-        const found = await this.findOneBy({user_id: userId})
-    
-        return found;
-    }
-
-    async getUserInfoById(userId: string) {
-        const found = await this.findOneBy({user_id: userId});
-
-        if(!found) {
-            throw new NotFoundException(`Can't find Board with id ${userId}`);
-        }
-
-        return found;
-    }
-
     async deleteUserById(userId: string): Promise <void> {
         const result = await this
         .createQueryBuilder()
