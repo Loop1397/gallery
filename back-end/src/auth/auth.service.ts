@@ -2,6 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './user.repository';
 import { AuthCredentialsDto } from './dto/auth-credential.dto';
+import { User } from './user.entity';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
@@ -30,11 +32,16 @@ export class AuthService {
         return found;
     }
 
+    /**
+     * TODO
+     * [x] : bcrypt를 이용하여 로그인 시 암호화된 비밀번호와 같은지 확인하도록 수정
+     */
     async login(authCredentialsDto: AuthCredentialsDto): Promise<object>{
         const { userId, password } = authCredentialsDto;
         const found = await this.userRepository.findOneBy({user_id: userId});
 
-        if (found && found.password === password) {
+        // bcrypt.compare() : 
+        if (found && (await bcrypt.compare(password, found.password))) {
             return found;
         } else {
             return { message : "Login failed!!" };

@@ -3,6 +3,7 @@ import { User } from "./user.entity"
 import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import { AuthCredentialsDto } from "./dto/auth-credential.dto";
 import { create } from "domain";
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UserRepository extends Repository<User> {
@@ -13,13 +14,17 @@ export class UserRepository extends Repository<User> {
     async createUser(authCredentialsDto: AuthCredentialsDto): Promise <void> {
         const { userId, password } = authCredentialsDto;
 
+        //bcrypt를 이용하여 password 암호화
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(password, salt);
+
         // const user = new User();
         // user.user_id = userId;
-        // user.password = password;
+        // user.password = hashedPassword;
 
         //typeORM에서 제공하는 메소드
         //동작은 위의 코드와 동일
-        const user = this.create({user_id: userId, password});
+        const user = this.create({user_id: userId, password: hashedPassword});
         
         try {
             await this.save(user);
@@ -45,6 +50,7 @@ export class UserRepository extends Repository<User> {
         // .where("user_number = :userNumber", {user_number: userNumber})
         // .execute()
 
+        //typeORM에서 제공하는 메소드
         const result = await this.delete(userNumber);
 
         // 존재하지 않는 id를 지우지 않으려고 할 때
