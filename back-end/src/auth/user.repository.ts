@@ -1,19 +1,19 @@
 import { DataSource, Repository } from "typeorm";
-import { Auth } from "./auth.entity"
+import { User } from "./user.entity"
 import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import { CreateAuthDto } from "./dto/create-auth.dto";
 import { create } from "domain";
 
 @Injectable()
-export class AuthRepository extends Repository<Auth> {
+export class UserRepository extends Repository<User> {
     constructor(dataSource: DataSource) {
-        super(Auth, dataSource.createEntityManager());
+        super(User, dataSource.createEntityManager());
     }
 
     async createUser(createAuthDto: CreateAuthDto): Promise <void> {
         const { userId, password } = createAuthDto;
 
-        const user = new Auth();
+        const user = new User();
         user.user_id = userId;
         user.password = password;
         
