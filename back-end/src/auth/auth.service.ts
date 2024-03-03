@@ -1,15 +1,17 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './user.repository';
 import { AuthCredentialsDto } from './dto/auth-credential.dto';
 import { User } from './user.entity';
 import * as bcrypt from 'bcryptjs';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
     constructor(
         @InjectRepository(UserRepository)
-        private userRepository: UserRepository
+        private userRepository: UserRepository,
+        private jwtService: JwtService
     ) {}
 
     async createUser(authCredentialsDto: AuthCredentialsDto): Promise <void> {
@@ -36,15 +38,21 @@ export class AuthService {
      * TODO
      * [x] : bcrypt를 이용하여 로그인 시 암호화된 비밀번호와 같은지 확인하도록 수정
      */
-    async login(authCredentialsDto: AuthCredentialsDto): Promise<object>{
+    async login(authCredentialsDto: AuthCredentialsDto): Promise<{accessToken: string}>{
         const { userId, password } = authCredentialsDto;
         const found = await this.userRepository.findOneBy({user_id: userId});
 
         // bcrypt.compare() : 
         if (found && (await bcrypt.compare(password, found.password))) {
-            return found;
+            // 로그인 성공 시 유저 토큰을 생성해야함 ( jwt, Secret + Payload )
+            // 토큰을 이용해 정보를 가져갈 위험성이 있기 때문에 payload에는 중요한 정보를 넣으면 안 됨
+            const payload = { userId };
+            // sign : payload를 토대로 토큰을 생성해주는 메소드
+            const accessToken = await this.jwtService.sign(payload);
+
+            return { accessToken };
         } else {
-            return { message : "Login failed!!" };
+            throw new UnauthorizedException("Login failed!!")
         }   
     }
 }
