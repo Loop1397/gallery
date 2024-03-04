@@ -4,6 +4,7 @@ import { AuthController } from './auth.controller';
 import { UserRepository } from './user.repository';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
@@ -19,9 +20,16 @@ import { JwtModule } from '@nestjs/jwt';
     })
   ],
   controllers: [AuthController],
+  // Auth모듈에서 쓸 수 있게함 
   providers: [
     AuthService,
-    UserRepository
+    UserRepository,
+    JwtStrategy
   ],
+  // JwtStrategy와 PassportModule을 다른 Module에서도 쓸 수 있게함
+  exports: [
+    JwtStrategy, 
+    PassportModule
+  ]
 })
 export class AuthModule {}
