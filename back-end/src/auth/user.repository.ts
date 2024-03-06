@@ -40,7 +40,7 @@ export class UserRepository extends Repository<User> {
 
     /** 
      * TODO
-     * [ ] : softDelete를 사용하기 위해 entity 수정하기(deleted 속성 추가)
+     * [x] : softDelete를 사용하기 위해 entity 수정하기(deleted 속성 추가)
      * [ ] : soft delete와 hard delete 차이에 관한 포스팅하기
      */
     async deleteUserById(userNumber: number): Promise <void> {
@@ -51,7 +51,8 @@ export class UserRepository extends Repository<User> {
         // .execute()
 
         //typeORM에서 제공하는 메소드
-        const result = await this.delete(userNumber);
+        // delete = hard delete(물리 삭제), softDelete = soft delete(논리 삭제)
+        const result = await this.softDelete(userNumber);
 
         // 존재하지 않는 id를 지우지 않으려고 할 때
         // 영향을 받은(지워진 데이터) 데이터 수가 result.affected로 출력됨(정수형)

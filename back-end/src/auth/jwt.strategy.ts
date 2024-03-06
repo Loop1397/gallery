@@ -17,6 +17,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         })
     }
 
+    /** 
+     * TODO
+     * [ ] : soft delete에도 대응 가능한지 확인 or 수정
+     */
     async validate(payload) {
         const { userId } = payload;
         const found: User = await this.userRepository.findOneBy({user_id: userId});
