@@ -1,9 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { Board } from './board.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('board')
+// 인증된 유저만 글을 쓸 수 있도록 authModule을 import해서 UseGuards 사용 
+// authModule의 import는 boardModule에서 이루어짐
+@UseGuards(AuthGuard())
 export class BoardController {
     constructor(private boardService: BoardService) {}
 
