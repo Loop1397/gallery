@@ -18,6 +18,8 @@ export class User extends BaseEntity {
     @CreateDateColumn({ name: 'created_at' })
     created_at: Date;
 
+    // 논리삭제용 컬럼
+    // nullable의 default값은 true로 보임
     @DeleteDateColumn({ name: 'deleted_at' })
     deleted_at: Date;
 }
