@@ -4,6 +4,8 @@ import { Board } from './board.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateBoardDto } from './dto/create-board.dto';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { User } from 'src/auth/user.entity';
 
 @Controller('board')
 // 인증된 유저만 글을 쓸 수 있도록 authModule을 import해서 UseGuards 사용 
@@ -13,8 +15,10 @@ export class BoardController {
     constructor(private boardService: BoardService) {}
 
     @Post()
-    createBoard(@Body() createBoardDto: CreateBoardDto): Promise<Board> {
-        return this.boardService.createBoard(createBoardDto);
+    createBoard(
+        @Body() createBoardDto: CreateBoardDto,
+        @GetUser() user: User): Promise<Board> {
+        return this.boardService.createBoard(createBoardDto, user);
     }
 
     @Get('/:id')

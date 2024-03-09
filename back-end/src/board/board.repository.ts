@@ -2,6 +2,8 @@ import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/co
 import { DataSource, Repository } from "typeorm";
 import { Board } from "./board.entity";
 import { BoardStatus } from "./board.model";
+import { CreateBoardDto } from "./dto/create-board.dto";
+import { User } from "src/auth/user.entity";
 
 @Injectable()
 export class BoardRepository extends Repository<Board> {
@@ -20,16 +22,24 @@ export class BoardRepository extends Repository<Board> {
         return found;
     }
 
-    async createBoard(body): Promise <Board> {
-        const { title, content, author} = body;
+    async createBoard(createBoardDto: CreateBoardDto, user: User): Promise <Board> {
+        const { title, content, author} = createBoardDto;
 
-        const board = new Board();
-        board.title = title;
-        board.content = content;
-        board.author = author;
-        board.status = BoardStatus.PUBLIC;
-        await board.save();
+        // const board = new Board();
+        // board.title = title;
+        // board.content = content;
+        // board.author = author;
+        // board.status = BoardStatus.PUBLIC;
 
+        const board = this.create({
+            title,
+            content,
+            author,
+            status: BoardStatus.PUBLIC,
+            user,
+        })
+
+        await this.save(board);
         return board;
     }
 
