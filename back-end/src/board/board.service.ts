@@ -16,7 +16,20 @@ export class BoardService {
         return this.boards;
     } */
 
-    getBoardById(id: number): Promise <Board> {
+    /**
+     * TODO:
+     * [ ]: createQueryBuilder에 대해 조사 후 포스팅
+     */
+    async getAllBoards(user: User): Promise<Board[]> {
+        const boards = this.boardRepository
+            .createQueryBuilder('board')
+            .where('board.userUserNumber = :user_number', {user_number: user.user_number})
+            .getMany();
+
+        return boards;
+    }
+
+    getBoardById(id: number): Promise<Board> {
         return this.boardRepository.getBoardById(id);
     }
 

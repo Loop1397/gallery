@@ -11,17 +11,6 @@ export class BoardRepository extends Repository<Board> {
         super(Board, dataSource.createEntityManager());
     }
 
-    async getBoardById(id: number): Promise <Board> {
-        // findOneBy : typeORM에서 제공하는 메소드중 하나
-        const found = await this.findOneBy({id: id});
-
-        if(!found) {
-            throw new NotFoundException(`Can't find Board with id ${id}`);
-        }
-
-        return found;
-    }
-
     async createBoard(createBoardDto: CreateBoardDto, user: User): Promise <Board> {
         const { title, content, author} = createBoardDto;
 
@@ -41,6 +30,17 @@ export class BoardRepository extends Repository<Board> {
 
         await this.save(board);
         return board;
+    }
+
+    async getBoardById(id: number): Promise<Board> {
+        // findOneBy : typeORM에서 제공하는 메소드중 하나
+        const found = await this.findOneBy({id: id});
+
+        if(!found) {
+            throw new NotFoundException(`Can't find Board with id ${id}`);
+        }
+
+        return found;
     }
 
     async updateBoard(id, body) {
