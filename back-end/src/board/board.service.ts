@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { BoardRepository } from './board.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Board } from './board.entity';
@@ -41,7 +41,18 @@ export class BoardService {
         return this.boardRepository.updateBoard(id, body);
     }
 
-    deleteBoardById(id: number): Promise <void> {
-        return this.boardRepository.deleteBoardById(id);
+    async deleteBoardById(id: number, user: User): Promise <void> {
+        // const result = await this.boardRepository
+        // .createQueryBuilder()
+        // .delete()
+        // .where("id = :id", {id: id})
+        // .execute()
+
+        const result = await this.boardRepository.delete({id, user})
+
+        // 존재하지 않는 id를 지우지 않으려고 할 때
+        if(result.affected === 0) {
+            throw new NotFoundException('존재하지 않는 id');
+        }
     }
 }
