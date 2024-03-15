@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { BoardStatus } from "./board.model";
 import { User } from "src/auth/user.entity";
 
@@ -22,6 +22,9 @@ export class Board extends BaseEntity {
     // user와 board의 관계성을 만들어주기위한 컬럼
     // 한 user가 여러 board를 만들 수 있기에 OneToMany Relationship
     // eager가 true면 user entity를 가져올 때 board entity도 같이 가져옴 
+    // 해당 컬럼의 이름은 user + user의 프라이머리키의 형태로 저장됨
+    // 여기서는 userUserNumber라는 외래키가 추가됨
+    // @JoinColumn이란 데코레이터를 통하여 저장될 외래키의 컬럼명을 직접 지정할수도 있음 (https://marklee1117.tistory.com/45)
     @ManyToOne(type => User, user => user.boards, {eager: false})
     user: User;
 
@@ -31,6 +34,8 @@ export class Board extends BaseEntity {
 
     @UpdateDateColumn({ name: 'updated_at' }) 
     updated_at: Date;
+
+    @DeleteDateColumn({ name: 'deleted_at' })
+    deleted_at: Date;
 }
-    // lastModifiedDate: Date;
     // Tags: ;

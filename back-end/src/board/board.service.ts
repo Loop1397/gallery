@@ -48,7 +48,7 @@ export class BoardService {
         // .where("id = :id", {id: id})
         // .execute()
 
-        const result = await this.boardRepository.delete({id, user})
+        const result = await this.boardRepository.softDelete({id, user})
 
         // 존재하지 않는 id를 지우지 않으려고 할 때
         if(result.affected === 0) {
