@@ -13,8 +13,9 @@ export class Board extends BaseEntity {
     @Column()
     content: string;
 
-    @Column()
-    author: string;
+    // 게시글을 작성한 user의 정보가 들어가도록 바뀌었으니 author는 더 이상 필요없음
+    // @Column()
+    // author: string;
 
     @Column()
     status: BoardStatus;
