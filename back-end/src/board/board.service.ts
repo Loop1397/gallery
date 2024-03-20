@@ -37,8 +37,8 @@ export class BoardService {
         return this.boardRepository.createBoard(createBoardDto, user);
     }
 
-    updateBoard(id:number, body:any) {
-        return this.boardRepository.updateBoard(id, body);
+    updateBoard(id:number, user:User, body: any) {
+        return this.boardRepository.updateBoard(id, user, body);
     }
 
     async deleteBoardById(id: number, user: User): Promise <void> {

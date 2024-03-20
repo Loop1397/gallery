@@ -34,9 +34,10 @@ export class BoardController {
     @Patch('/:id')
     updateBoard(
         @Param('id') id: number,
-        @Body() body: any 
+        @GetUser() user: User,
+        @Body() body: any
     ) {
-        return this.boardService.updateBoard(id, body);
+        return this.boardService.updateBoard(id, user, body);
     }
 
     @Delete('/:id')

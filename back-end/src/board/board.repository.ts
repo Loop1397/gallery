@@ -23,7 +23,6 @@ export class BoardRepository extends Repository<Board> {
         const board = this.create({
             title,
             content,
-            author,
             status: BoardStatus.PUBLIC,
             user,
         })
@@ -43,19 +42,19 @@ export class BoardRepository extends Repository<Board> {
         return found;
     }
 
-    async updateBoard(id, body) {
-        const { title, content, author } = body;
+    async updateBoard(id: number, user: User, body: any) {
+        const { title, content } = body;
 
         const found = await this.getBoardById(id);
 
         //게시글의 원 작성자와 요청을 보낸 작성자가 다를 경우 에러
-        if(author !== found.author) {
-            throw new UnauthorizedException('author가 다릅니다');
+        if(user !== found.user) {
+            throw new UnauthorizedException('게시글을 작성한 유저와 다른 id로 접근했습니다.');
         }
         
         found.title = title;
         found.content = content;
-        found.author = author;
+        found.user = user;
         await found.save();
     }
 }
