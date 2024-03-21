@@ -9,6 +9,12 @@ import { GetUser } from './get-user.decorator';
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
+
+    /**
+     * TODO
+     * [ ] : 논리 삭제된 계정을 복구할 수 있도록 변경
+     */
+
     @Post('/signup')
     createUser(@Body(ValidationPipe) authCredentialsDto: AuthCredentialsDto): Promise <void> {
         return this.authService.createUser(authCredentialsDto);
@@ -26,6 +32,12 @@ export class AuthController {
     @Post('/login')
     login(@Body(ValidationPipe) authCredentialsDto: AuthCredentialsDto): Promise<{accessToken: string}> {
         return this.authService.login(authCredentialsDto);
+    }
+
+    // soft-delete된 계정 복구용 메소드 
+    @Post('/recovery/:userNumber')
+    recovery(@Param('userNumber') userNumber: number) {
+        return this.authService.recovery(userNumber);
     }
 
     @Get('/:userNumber')

@@ -55,4 +55,26 @@ export class AuthService {
             throw new UnauthorizedException("Login failed!!")
         }   
     }
+
+    // https://kscodebase.tistory.com/598
+    async recovery(userNumber:number) {
+        // const softDeletedUser = await this.userRepository.findOne(id, {
+        //     withDeleted: true,
+        // });
+
+        const [softDeletedUser] = await this.userRepository.find({
+            take:1,
+            where: {
+                user_number: userNumber,
+            },
+            withDeleted: true
+        });
+  
+        if (softDeletedUser) {
+            // deletedAt 속성을 null로 설정하여 복원합니다.
+            softDeletedUser.deleted_at = null;
+            // 변경된 속성을 저장합니다.
+            await this.userRepository.save(softDeletedUser);
+        }
+    }
 }
