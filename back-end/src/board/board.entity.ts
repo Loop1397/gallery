@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { BoardStatus } from "./board.model";
 import { User } from "src/auth/user.entity";
 
@@ -27,6 +27,7 @@ export class Board extends BaseEntity {
     // 여기서는 userUserNumber라는 외래키가 추가됨
     // @JoinColumn이란 데코레이터를 통하여 저장될 외래키의 컬럼명을 직접 지정할수도 있음 (https://marklee1117.tistory.com/45)
     @ManyToOne(type => User, user => user.boards, {eager: false})
+    @JoinColumn({ name: 'user'})
     user: User;
 
     //DB에 들어가는 시간
